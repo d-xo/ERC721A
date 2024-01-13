@@ -62,13 +62,13 @@ contract ERC721A is IERC721A {
     uint256 private constant _BITPOS_START_TIMESTAMP = 160;
 
     // The bit mask of the `burned` bit in packed ownership.
-    uint256 private constant _BITMASK_BURNED = 1 << 224;
+    uint256 internal constant _BITMASK_BURNED = 1 << 224;
 
     // The bit position of the `nextInitialized` bit in packed ownership.
     uint256 private constant _BITPOS_NEXT_INITIALIZED = 225;
 
     // The bit mask of the `nextInitialized` bit in packed ownership.
-    uint256 private constant _BITMASK_NEXT_INITIALIZED = 1 << 225;
+    uint256 internal constant _BITMASK_NEXT_INITIALIZED = 1 << 225;
 
     // The bit position of `extraData` in packed ownership.
     uint256 private constant _BITPOS_EXTRA_DATA = 232;
@@ -116,7 +116,7 @@ contract ERC721A is IERC721A {
     // - [224]      `burned`
     // - [225]      `nextInitialized`
     // - [232..255] `extraData`
-    mapping(uint256 => uint256) private _packedOwnerships;
+    mapping(uint256 => uint256) internal _packedOwnerships;
 
     // Mapping owner address to address data.
     //
@@ -128,7 +128,7 @@ contract ERC721A is IERC721A {
     mapping(address => uint256) private _packedAddressData;
 
     // Mapping from token ID to approved address.
-    mapping(uint256 => TokenApprovalRef) private _tokenApprovals;
+    mapping(uint256 => TokenApprovalRef) internal _tokenApprovals;
 
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
@@ -351,7 +351,7 @@ contract ERC721A is IERC721A {
     /**
      * Returns the packed ownership data of `tokenId`.
      */
-    function _packedOwnershipOf(uint256 tokenId) private view returns (uint256 packed) {
+    function _packedOwnershipOf(uint256 tokenId) internal view returns (uint256 packed) {
         if (_startTokenId() <= tokenId) {
             packed = _packedOwnerships[tokenId];
             // If the data at the starting slot does not exist, start the scan.
